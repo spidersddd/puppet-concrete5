@@ -5,8 +5,8 @@ class concrete5::install {
     default  => $concrete5::version
   }
 
-  $archive_file = "concrete${version}.zip"
-  $docroot_dir  = "concrete${version}"
+  $archive_file = "${concrete5::install_dir}/concrete${version}.zip"
+  $docroot_dir  = "${concrete5::install_dir}/concrete${version}"
 
   # Concrete5 doesn't appear to have deterministic URLs, so we'll map versions
   # to URLs here.
@@ -26,15 +26,17 @@ class concrete5::install {
     command => "wget -O ${archive_file} ${download_url}",
     cwd     => $concrete5::install_dir,
     creates => $docroot_dir,
+    path    => ['/usr/bin'],
   }
 
   exec { 'unpack concrete5':
     command => "unzip -o ${archive_file}",
     cwd     => $concrete5::install_dir,
     creates => $docroot_dir,
+    path    => ['/usr/bin'],
   }
 
-  file { "${bertha::dock_dir}/${archive_file}":
+  file { "${concrete5::install_dir}/${archive_file}":
     ensure => absent,
   }
 

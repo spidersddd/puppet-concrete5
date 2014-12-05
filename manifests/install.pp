@@ -20,7 +20,18 @@ class concrete5::install {
     fail("Unsupported version of Concrete5 specified: ${concrete5::version}. Please add to selector statement in install.pp.")
   }
 
-  ensure_resource('package', 'wget', { ensure => installed })
+  ensure_resource(
+    'package',
+    [
+      'wget',
+      'php-gd',
+      'php-pdo',
+      'php-mysql',
+    ],
+    {
+      ensure => installed,
+    }
+  )
 
   exec { 'download concrete5':
     command => "wget -O ${archive_file} ${download_url}",
@@ -36,11 +47,13 @@ class concrete5::install {
     path    => ['/usr/bin'],
   }
 
-  file { $docroot_dir,
+  file { [
+    "${docroot_dir}/packages",
+    "${docroot_dir}/application/config",
+    "${docroot_dir}/application/files",
+    ]:
     ensure  => directory,
-    recurse => true,
-    owner   => $concrete5::user,
-    group   => $concrete5::group,
+    mode    => '+w',
   }
 
   file { "${concrete5::install_dir}/${archive_file}":

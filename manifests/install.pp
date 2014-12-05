@@ -56,6 +56,11 @@ class concrete5::install {
     mode    => '+w',
   }
 
+  file { "${concrete5::install_dir}/concrete5":
+    ensure => link,
+    target => $docroot_dir,
+  }
+
   file { "${concrete5::install_dir}/${archive_file}":
     ensure => absent,
   }

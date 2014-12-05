@@ -61,7 +61,7 @@ class concrete5::install {
     target => $docroot_dir,
   }
 
-  file { "${concrete5::install_dir}/${archive_file}":
+  file { $archive_file:
     ensure => absent,
   }
 

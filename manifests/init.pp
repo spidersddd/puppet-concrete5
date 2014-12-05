@@ -35,6 +35,8 @@
 class concrete5 (
 	$version = 'latest',
 	$install_dir = '/opt',
+	$user = 'apache',
+	$group = 'apache',
 ) {
 
 	contain 'concrete5::install'

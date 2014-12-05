@@ -36,6 +36,13 @@ class concrete5::install {
     path    => ['/usr/bin'],
   }
 
+  file { $docroot_dir,
+    ensure  => directory,
+    recurse => true,
+    owner   => $concrete5::user,
+    group   => $concrete5::group,
+  }
+
   file { "${concrete5::install_dir}/${archive_file}":
     ensure => absent,
   }

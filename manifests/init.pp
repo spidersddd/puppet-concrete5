@@ -4,27 +4,28 @@
 #
 # === Parameters
 #
-# Document parameters here.
+# [*version*]
+#   Defaults to 'latest' which points to the newest known supported version.
+#   The version of Concrete5 to install. Currently only supports 5.7. See
+#   install.pp for a list of all supported versions.
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# [*install_dir*]
+#   Defaults to /opt
+#   Where to install Concrete5. This module will create a directory named
+#   ${install_dir}/concrete5${version} and a symlink to it under
+#   ${install_dir}/concrete5
 #
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if
-#   it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should be avoided in favor of class parameters as
-#   of Puppet 2.6.)
+# [*theme_name*]
+#   (Optional)
+#   If specified, this module will create a writable empty directory under
+#   ${install_dir}/concrete5/application/themes/${theme_name}
 #
 # === Examples
 #
 #  class { 'concrete5':
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
+#    version     => '5.7.2.1',
+#    install_dir => '/opt',
+#    theme_name  => 'my_theme',
 #  }
 #
 # === Authors
@@ -33,12 +34,14 @@
 #
 #
 class concrete5 (
-	$version = 'latest',
-	$install_dir = '/opt',
-	$user = 'apache',
-	$group = 'apache',
+  $version     = 'latest',
+  $install_dir = '/opt',
+  $theme_name  = undef,
 ) {
 
-	contain 'concrete5::install'
+  $docroot_dir  = "${install_dir}/concrete${version}"
+
+  class { 'concrete5::install': } ->
+  class { 'concrete5::config': }
 
 }

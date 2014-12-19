@@ -51,9 +51,10 @@ class concrete5::install {
     "${docroot_dir}/packages",
     "${docroot_dir}/application/config",
     "${docroot_dir}/application/files",
+    "${docroot_dir}/application/themes",
     ]:
-    ensure  => directory,
-    mode    => '+w',
+    ensure => directory,
+    mode   => '+w',
   }
 
   file { "${concrete5::install_dir}/concrete5":

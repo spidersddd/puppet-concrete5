@@ -1,4 +1,7 @@
 class concrete5::config inherits concrete5 {
+  $theme_name   = $concrete5::theme_name
+  $install_dir  = $concrete5::install_dir
+  $docroot_dir  = $concrete5::docroot_dir
 
   file { [
     "${docroot_dir}/packages",

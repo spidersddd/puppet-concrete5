@@ -31,17 +31,26 @@
 # === Authors
 #
 # Bryan Cornies <bryan@sixsquarestudio.com>
+# Troy Klein    <spidersddd@gmail.com>
 #
 #
 class concrete5 (
-  $version     = 'latest',
-  $install_dir = '/opt',
-  $theme_name  = undef,
+  Optional[String] $theme_name,
+  String $version,
+  String $install_dir,
+  Variant[String, Array] $packages,
 ) {
+
+  case $facts['os']['family'] {
+    'Debian': { }
+    default: {
+      fail("Module ${name} does not support ${facts['os']['family']}!")
+    }
+  }
 
   $docroot_dir  = "${install_dir}/concrete${version}"
 
-  class { 'concrete5::install': } ->
-  class { 'concrete5::config': }
+  class {'concrete5::install': }
+  -> class { 'concrete5::config': }
 
 }

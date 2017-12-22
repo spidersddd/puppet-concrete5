@@ -1,0 +1,7 @@
+---
+
+concrete5::packages: 
+  - 'wget'
+  - 'php-gd'
+  - 'php-pdo'
+  - 'php-mysql'

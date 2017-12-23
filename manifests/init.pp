@@ -48,7 +48,8 @@ class concrete5 (
     }
   }
 
-  $docroot_dir  = "${install_dir}/concrete${version}"
+  $mod_dir = regsubst($version, '\.', '-')
+  $docroot_dir  = "${install_dir}/concrete${mod_dir}"
 
   class {'concrete5::install': }
   -> class { 'concrete5::config': }

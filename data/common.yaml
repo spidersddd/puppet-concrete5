@@ -2,7 +2,8 @@
 
 concrete5::version: '5.8.3.1'
 concrete5::install_dir: '/opt'
-concrete5::download_url:
+concrete5::theme_name: undef
+concrete5::download_urls:
   '5.8.3.1':  'https://www.concrete5.org/download_file/-/view/99963/'
   '5.7.0':    'http://www.concrete5.org/download_file/-/view/70843/8497/'
   '5.7.0.1':  'http://www.concrete5.org/download_file/-/view/70916/8497/'
